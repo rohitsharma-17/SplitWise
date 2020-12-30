@@ -8,17 +8,17 @@ import com.hashedin.entities.Users;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.AttributeConverter;
-import java.util.TreeSet;
+import java.util.List;
 
 @Slf4j
-public class MemberListConverter implements AttributeConverter<TreeSet<Users>, String> {
+public class MemberListConverter implements AttributeConverter<List<Users>, String> {
     @Override
     public String convertToDatabaseColumn(TreeSet<Users> strings) {
         if (null == strings) {
             return null;
         }
         try {
-            return new ObjectMapper().writeValueAsString(strings);
+            return JSONUtil.getMapper().writeValueAsString(strings);
         } catch (JsonProcessingException e) {
             log.error("Error serializing attribute", e);
             return null;
@@ -31,7 +31,7 @@ public class MemberListConverter implements AttributeConverter<TreeSet<Users>, S
             return null;
         }
         try {
-            return new ObjectMapper().readValue(dbData, new TypeReference<TreeSet<Users>>() {
+            return JSONUtil.getMapper().readValue(dbData, new TypeReference<TreeSet<Users>>() {
             });
         } catch (JsonProcessingException e) {
             log.error("Error deserializing attribute", e);
