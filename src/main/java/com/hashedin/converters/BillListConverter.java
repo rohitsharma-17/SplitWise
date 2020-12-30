@@ -18,7 +18,7 @@ public class BillListConverter implements AttributeConverter<List<Bills>,String>
             return null;
         }
         try {
-            return new ObjectMapper().writeValueAsString(bills);
+            return JSONUtil.getMapper().writeValueAsString(bills);
         } catch (JsonProcessingException e) {
             log.error("Error serializing attribute", e);
             return null;
@@ -31,7 +31,7 @@ public class BillListConverter implements AttributeConverter<List<Bills>,String>
             return null;
         }
         try {
-            return new ObjectMapper().readValue(dbData, new TypeReference<List<Bills>>() {
+            return JSONUtil.getMapper().readValue(dbData, new TypeReference<List<Bills>>() {
             });
         } catch (JsonProcessingException e) {
             log.error("Error deserializing attribute", e);
