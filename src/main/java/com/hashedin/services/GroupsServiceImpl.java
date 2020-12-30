@@ -105,7 +105,7 @@ public class GroupsServiceImpl implements IGroupsService{
         billsService.getListOfBill(groupId).forEach(
                 bills -> {
                     bills.getAmountPerHead().forEach((k,v) ->{
-                        if(null != k){
+                        if(null != detail.get(k)){
                             Double tempValue = detail.get(k);
                             detail.put(k,tempValue + v);
                         }else {
