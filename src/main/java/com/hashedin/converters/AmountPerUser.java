@@ -17,7 +17,7 @@ public class AmountPerUser implements AttributeConverter<Map<String, Double>, St
             return null;
         }
         try {
-            return new ObjectMapper().writeValueAsString(stringDoubleMap);
+            return JSONUtil.getMapper().writeValueAsString(stringDoubleMap);
         } catch (JsonProcessingException e) {
             log.error("Error serializing attribute", e);
             return null;
@@ -30,7 +30,7 @@ public class AmountPerUser implements AttributeConverter<Map<String, Double>, St
             return null;
         }
         try {
-            return new ObjectMapper().readValue(dbData, new TypeReference<Map<String, Double>>() {
+            return JSONUtil.getMapper().readValue(dbData, new TypeReference<Map<String, Double>>() {
             });
         } catch (JsonProcessingException e) {
             log.error("Error deserializing attribute", e);
