@@ -18,7 +18,7 @@ public class GroupListConverter implements AttributeConverter<List<Groups>, Stri
             return null;
         }
         try {
-            return new ObjectMapper().writeValueAsString(groups);
+            return JSONUtil.getMapper().writeValueAsString(groups);
         } catch (JsonProcessingException e) {
             log.error("Error serializing attribute", e);
             return null;
@@ -31,7 +31,7 @@ public class GroupListConverter implements AttributeConverter<List<Groups>, Stri
             return null;
         }
         try {
-            return new ObjectMapper().readValue(dbData, new TypeReference<List<Groups>>() {
+            return JSONUtil.getMapper().readValue(dbData, new TypeReference<List<Groups>>() {
             });
         } catch (JsonProcessingException e) {
             log.error("Error deserializing attribute", e);
