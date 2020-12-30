@@ -44,7 +44,19 @@ public class GroupsServiceImpl implements IGroupsService{
         }
         groups.setMembers(usersList);
         GroupResponse groupResponse = new GroupResponse();
-        BeanUtils.copyProperties(groupRepository.save(groups),groupResponse);
+        groups = groupRepository.save(groups);
+        BeanUtils.copyProperties(groups,groupResponse);
+        if( null != groups.getMembers() && groups.getMembers().size()> 0){
+            Groups finalGroups = groups;
+            groups.getMembers().stream().forEach(users -> {
+                users = userRepository.findByEmailAndDeletedFalse(users.getEmail());
+                if(null != users.getGroupsList()){
+                    users.getGroupsList().add(finalGroups);
+                }else {
+                    users.setGroupsList(Arrays.asList(finalGroups));
+                }
+                userRepository.save(users);
+            });
         return groupResponse;
     }
 
